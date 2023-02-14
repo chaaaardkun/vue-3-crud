@@ -57,7 +57,7 @@ const navigate = (route: string) => {
         </a>
         <button
           @click="navigate('/products')"
-          class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50 bg-transparent text-primary font-normal p-0"
+          class="outline-none border-0 block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50 bg-transparent text-primary font-normal p-0"
         >
           Products
         </button>

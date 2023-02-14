@@ -147,9 +147,9 @@ const onSearchChange = (e: KeyboardEvent) => {
 
       <input name="name" placeholder="Name" v-model="state.name" />
 
-      <div class="w-full">
+      <div class="w-full text-start">
         <input name="price" placeholder="Price" v-model="state.price" />
-        <span class="text-red-400 text-start">{{ error.message }}</span>
+        <span class="text-red-400 mt-4">{{ error.message }}</span>
       </div>
 
       <button @click="() => submit()" class="bg-red p-4">
@@ -163,10 +163,10 @@ const onSearchChange = (e: KeyboardEvent) => {
 
 <style scoped>
 table {
-  @apply border border-primary min-w-[10rem] w-full;
+  @apply border border-primary min-w-[10rem] w-full table-fixed;
 }
 table th {
-  @apply border border-primary border-b-0 bg-gray-100 py-2 px-6 min-w-[13rem];
+  @apply border border-primary border-b-0 bg-gray-100 py-2 px-6 min-w-[8rem] md:min-w-[13rem];
 }
 
 table td {
