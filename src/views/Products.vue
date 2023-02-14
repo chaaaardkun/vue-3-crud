@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CTA from '../components/CTA.vue';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, computed, watch } from 'vue';
 import { createId } from '@paralleldrive/cuid2';
 
 interface ItemState {
@@ -23,10 +23,11 @@ const error = reactive<ErrorMessage>({
 });
 
 const products = ref([] as any);
+const filteredList = ref([] as any);
 const isEdit = ref(false);
 
-const getProduct = (products: any, id: string) => {
-  return products.value.findIndex((obj: any) => obj.id === id);
+const getProductById = (products: any, selectedId: string) => {
+  return products.value.findIndex((obj: any) => obj.id === selectedId);
 };
 
 const resetFields = () => {
@@ -36,7 +37,9 @@ const resetFields = () => {
 };
 
 const submit = () => {
-  const isExisting = products.value.find((obj: any) => obj.name === state.name);
+  const isExisting = products.value.find(
+    (obj: any) => obj.name.toLowerCase() === state.name.toLowerCase()
+  );
   const isFieldEmpty = !state.name || !state.price;
 
   if (!isFieldEmpty && !isExisting && !isEdit.value) {
@@ -45,6 +48,7 @@ const submit = () => {
       name: state.name,
       price: state.price,
     });
+    filteredList.value = products.value;
     resetFields();
     return (error.message = '');
   }
@@ -54,7 +58,7 @@ const submit = () => {
   }
 
   if (isEdit.value && !isFieldEmpty) {
-    const prodIndex = getProduct(products, state.id);
+    const prodIndex = getProductById(products, state.id);
 
     products.value[prodIndex].name = state.name;
     products.value[prodIndex].price = state.price;
@@ -68,7 +72,7 @@ const submit = () => {
 };
 
 const editProduct = (id: string) => {
-  const prodIndex = getProduct(products, id);
+  const prodIndex = getProductById(products, id);
 
   state.name = products.value[prodIndex].name;
   state.price = products.value[prodIndex].price;
@@ -79,7 +83,7 @@ const editProduct = (id: string) => {
 };
 
 const deleteProduct = (product: any) => {
-  const prodIndex = getProduct(products, product.id);
+  const prodIndex = getProductById(products, product.id);
 
   if (prodIndex > -1) {
     products.value.splice(prodIndex, 1);
@@ -89,12 +93,21 @@ const deleteProduct = (product: any) => {
 };
 
 const onSearchChange = (e: KeyboardEvent) => {
-  const element = e.target as HTMLInputElement;
-  const items = products.value.filter((obj: any) =>
-    obj.name.includes(element.value)
-  );
-  products.value = items;
+  if (products.value.length !== 0) {
+    const element = e.target as HTMLInputElement;
+    const filteredProducts = products.value.filter((obj: any) =>
+      obj.name.toLowerCase().includes(element.value.toLowerCase())
+    );
+    filteredList.value = filteredProducts;
+  }
 };
+
+watch(
+  () => filteredList.value,
+  (newValue) => {
+    filteredList.value = newValue;
+  }
+);
 </script>
 
 <template>
@@ -114,11 +127,11 @@ const onSearchChange = (e: KeyboardEvent) => {
           <th>Price</th>
           <th>Action</th>
         </tr>
-        <tr v-for="product in products">
+        <tr v-for="product in filteredList">
           <td hidden>{{ product.id }}</td>
           <td>{{ product.name }}</td>
           <td>{{ product.price }}</td>
-          <td>
+          <td class="text-center">
             <button
               class="text-sm p-1 min-w-[4rem] mr-2"
               @click="() => editProduct(product.id)"
@@ -134,7 +147,10 @@ const onSearchChange = (e: KeyboardEvent) => {
           </td>
         </tr>
         <tr v-if="products.length === 0">
-          There are no products listed yet.
+          <td colspan="3">There are no products listed yet.</td>
+        </tr>
+        <tr v-else-if="filteredList.length === 0">
+          <td colspan="3">Item not Found</td>
         </tr>
       </table>
     </div>
