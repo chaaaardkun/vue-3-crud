@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HelloWorld from '../components/HelloWorld.vue';
 import Header from '../components/Header.vue';
 </script>
 
@@ -7,7 +6,7 @@ import Header from '../components/Header.vue';
   <Header />
   <section class="grid lg:grid-cols-2 container mx-auto mt-32">
     <div class="lg:max-w-md text-center lg:text-start">
-      <h1>Lorem ipsum dolor sit amet, consectetur</h1>
+      <h1 class="mb-4">Lorem ipsum dolor sit amet, consectetur</h1>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
@@ -68,7 +67,7 @@ import Header from '../components/Header.vue';
         <img
           src="/"
           alt=""
-          class="bg-gray-300 mx-auto relative lg:absolute w-[35rem] h-[35rem]"
+          class="bg-gray-300 mx-auto relative lg:absolute w-full lg:w-[35rem] h-[35rem]"
         />
       </div>
       <div class="lg:max-w-md text-center lg:text-start">

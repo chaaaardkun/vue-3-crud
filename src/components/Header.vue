@@ -1,12 +1,19 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const collapse = ref(false);
+</script>
+
 <template>
   <nav
-    class="container mx-auto flex items-center justify-between flex-wrap py-6"
+    class="container mx-auto flex items-center justify-between flex-wrap py-6 px-4 sm:px-0"
   >
     <div class="flex items-center flex-shrink-0">
       <span class="font-bold text-xl">Logo</span>
     </div>
     <div class="block lg:hidden">
       <button
+        @click="collapse = !collapse"
         class="flex items-center px-3 py-2 border rounded hover:text-opacity-50 hover:border-opacity-50"
       >
         <svg
@@ -19,7 +26,10 @@
         </svg>
       </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+    <div
+      :style="collapse ? { maxHeight: '200px' } : {}"
+      class="w-full block flex-grow overflow-hidden max-h-0 duration-200 transition ease-in-out bg-white absolute z-50 top-20 lg:max-h-none lg:static lg:bg-transparent lg:flex lg:items-center lg:w-auto"
+    >
       <div class="text-sm lg:flex lg:flex-grow lg:justify-center lg:gap-10">
         <a
           href="#responsive-header"
@@ -56,3 +66,9 @@
     </div>
   </nav>
 </template>
+
+<style scoped>
+#state:checked ~ .content {
+  max-height: 200px;
+}
+</style>
