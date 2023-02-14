@@ -1,15 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const collapse = ref(false);
+
+const navigate = (route: string) => {
+  router.push(route);
+};
 </script>
 
 <template>
   <nav
     class="container mx-auto flex items-center justify-between flex-wrap py-6 px-4 sm:px-0"
   >
-    <div class="flex items-center flex-shrink-0">
-      <span class="font-bold text-xl">Logo</span>
+    <div class="flex items-center flex-shrink-0" @click="navigate('/')">
+      <span class="font-bold text-xl cursor-pointer">Logo</span>
     </div>
     <div class="block lg:hidden">
       <button
@@ -32,36 +38,32 @@ const collapse = ref(false);
     >
       <div class="text-sm lg:flex lg:flex-grow lg:justify-center lg:gap-10">
         <a
-          href="#responsive-header"
+          href="#"
           class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50"
         >
           Home
         </a>
         <a
-          href="#responsive-header"
+          href="#"
           class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50"
         >
           About
         </a>
         <a
-          href="#responsive-header"
+          href="#"
           class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50"
         >
           Services
         </a>
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50"
+        <button
+          @click="navigate('/products')"
+          class="block mt-4 lg:inline-block lg:mt-0 hover:text-opacity-50 bg-transparent text-primary font-normal p-0"
         >
           Products
-        </a>
+        </button>
       </div>
       <div>
-        <a
-          href="#"
-          class="inline-block text-sm px-5 py-3 leading-none border rounded bg-primary text-white border-white hover:bg-opacity-50 mt-4 lg:mt-0"
-          >Call to Action</a
-        >
+        <button>Call to Action</button>
       </div>
     </div>
   </nav>

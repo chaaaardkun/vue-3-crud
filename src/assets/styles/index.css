@@ -38,9 +38,13 @@ a {
 }
 
 button {
-  @apply font-semibold inline-block text-sm px-5 py-3 leading-none border rounded bg-primary text-white border-white hover:bg-opacity-50 mt-4 lg:mt-0;
+  @apply font-semibold inline-block text-sm px-5 py-3 leading-none border border-primary rounded bg-primary text-white  hover:bg-opacity-50 mt-4 lg:mt-0;
 }
 
 section {
   @apply my-16;
+}
+
+input {
+  @apply p-4 rounded w-full;
 }
